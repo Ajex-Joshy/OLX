@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const user = useSelector((store) => store.user.userInfo);
+  const cart = useSelector((store) => store.cart.items);
   // console.log(user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const Header = () => {
               <Link to="/my-products">My products</Link>
             </li>
             <li>
-              <Link to="/cart">Cart</Link>
+              <Link to="/cart">Cart - {cart.length}</Link>
             </li>
           </ul>
         )}

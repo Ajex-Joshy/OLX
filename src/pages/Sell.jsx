@@ -3,6 +3,7 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../config/firebase";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Sell = () => {
   const {
@@ -11,6 +12,7 @@ const Sell = () => {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+  const user = useSelector((store) => store.user.userInfo);
 
   const onSubmit = async (data) => {
     try {
@@ -35,6 +37,8 @@ const Sell = () => {
         price: Number(data.price),
         imageUrl: cloudData.secure_url,
         createdAt: serverTimestamp(),
+        uid: user.uid,
+        isSold: false,
       });
       toast.success("Product uploaded successfully!", {
         duration: 2000,
@@ -52,7 +56,7 @@ const Sell = () => {
       </div>
       <div>
         <h1 className="m-4 p-4 text-2xl text-white font-bold text-center">
-          List You Product
+          List Your Product for free!
         </h1>
       </div>
       <form
