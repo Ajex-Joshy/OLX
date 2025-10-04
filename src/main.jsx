@@ -11,6 +11,7 @@ import ProductListing from "./pages/ProductListing.jsx";
 import Sell from "./pages/Sell.jsx";
 import Cart from "./pages/Cart.jsx";
 import MyProducts from "./pages/MyProducts.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 const appRoute = createBrowserRouter([
   {
@@ -19,7 +20,11 @@ const appRoute = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <ProductListing />,
+        element: (
+          <ProtectedRoute>
+            <ProductListing />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/login",
@@ -27,15 +32,27 @@ const appRoute = createBrowserRouter([
       },
       {
         path: "/sell",
-        element: <Sell />,
+        element: (
+          <ProtectedRoute>
+            <Sell />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/my-products",
-        element: <MyProducts />,
+        element: (
+          <ProtectedRoute>
+            <MyProducts />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

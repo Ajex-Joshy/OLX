@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeUser, addUser } from "../store/userSlice";
@@ -7,32 +7,16 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const user = useSelector((store) => store.user.user);
+  const user = useSelector((store) => store.user.userInfo);
+  // console.log(user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (firebaseUser) {
-        const userData = {
-          uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          displayName: firebaseUser.displayName,
-        };
-        dispatch(addUser(userData));
-      } else {
-        dispatch(removeUser());
-        navigate("/login");
-      }
-    });
-
-    return () => unsubscribe();
-  }, [dispatch, navigate]);
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
       dispatch(removeUser());
+      navigate("/login");
     } catch (err) {
       console.error("Logout failed:", err.message);
     }

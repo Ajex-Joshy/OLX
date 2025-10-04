@@ -21,7 +21,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((store) => store.user.user);
+  const user = useSelector((store) => store.user.userInfo);
 
   useEffect(() => {
     if (user) navigate("/");
@@ -47,6 +47,7 @@ const Login = () => {
         email: user.email,
         displayName: user.displayName,
       };
+      console.log(user);
       dispatch(addUser(userData));
       navigate("/");
     } catch (err) {
