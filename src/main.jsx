@@ -12,6 +12,7 @@ import Sell from "./pages/Sell.jsx";
 import Cart from "./pages/Cart.jsx";
 import MyProducts from "./pages/MyProducts.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import CheckOut from "./pages/CheckOut.jsx";
 
 const appRoute = createBrowserRouter([
   {
@@ -51,6 +52,14 @@ const appRoute = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <MyProducts />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/checkout",
+        element: (
+          <ProtectedRoute>
+            <CheckOut />
           </ProtectedRoute>
         ),
       },

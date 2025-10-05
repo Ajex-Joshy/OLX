@@ -6,6 +6,7 @@ import ProductCard from "../components/ProductCard"; // adjust path if needed
 const ProductListing = () => {
   const dispatch = useDispatch();
   const products = useSelector((store) => store.products);
+  const user = useSelector((store) => store.user.userInfo);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -15,9 +16,10 @@ const ProductListing = () => {
   if (products.error) return <p>Error: {products.error}</p>;
   return (
     <div className="flex flex-wrap m-10">
-      {products.data.map((product) => (
-        <ProductCard key={product.id} data={product} />
-      ))}
+      {products.data.map((product) => {
+        if (product.uid !== user.uid)
+          return <ProductCard key={product.id} data={product} />;
+      })}
     </div>
   );
 };
