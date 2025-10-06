@@ -14,12 +14,24 @@ const ProductListing = () => {
 
   if (products.loading) return <p>Loading products...</p>;
   if (products.error) return <p>Error: {products.error}</p>;
+
+  const visibleProducts =
+    products.data?.filter(
+      (product) => product.uid !== user.uid && product.isSold !== true
+    ) || [];
+
+  if (visibleProducts.length === 0)
+    return (
+      <p className="text-center mt-20 text-white text-lg">
+        No available products right now.
+      </p>
+    );
+
   return (
-    <div className="flex flex-wrap m-10">
-      {products.data.map((product) => {
-        if (product.uid !== user.uid)
-          return <ProductCard key={product.id} data={product} />;
-      })}
+    <div className="flex flex-wrap m-10 gap-6">
+      {visibleProducts.map((product) => (
+        <ProductCard key={product.id} data={product} />
+      ))}
     </div>
   );
 };

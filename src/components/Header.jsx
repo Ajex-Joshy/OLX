@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const user = useSelector((store) => store.user.userInfo);
   const cart = useSelector((store) => store.cart.items);
-  // console.log(user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 
 export const fetchProducts = createAsyncThunk(
@@ -15,6 +15,21 @@ export const fetchProducts = createAsyncThunk(
       };
     });
     return productsArray;
+  }
+);
+
+export const markProductsAsSold = createAsyncThunk(
+  "products/markProductsAsSold",
+  async (ids, { rejectWithValue }) => {
+    try {
+      for (const id of ids) {
+        const productRef = doc(db, "products", id);
+        await updateDoc(productRef, { isSold: true });
+      }
+      return ids;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -49,9 +64,18 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(markProductsAsSold.fulfilled, (state, action) => {
+        action.payload.forEach((id) => {
+          const product = state.data.find((p) => p.id === id);
+          if (product) {
+            product.isSold = true;
+          }
+        });
       });
   },
 });
 
 export const { addProduct, deleteProduct } = productSlice.actions;
+export { markProductsAsSold };
 export default productSlice.reducer;

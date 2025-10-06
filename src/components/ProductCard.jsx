@@ -8,10 +8,9 @@ import { db } from "../config/firebase";
 import { deleteProduct } from "../store/productSlice";
 
 const ProductCard = ({
-  data: { id, imageUrl, productName, price, description },
+  data: { id, imageUrl, productName, price, description, isSold },
   myProduct,
 }) => {
-  console.log(myProduct);
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const isAdded = cartItems.some((item) => item.id === id);
@@ -71,20 +70,28 @@ const ProductCard = ({
         <p className="text-gray-600 mt-2">{description}</p>
         <p className="text-blue-600 font-bold text-xl mt-2"> ₹{price}</p>
         {myProduct ? (
-          <div className="flex gap-2 mt-4">
-            <button
-              onClick={handleEdit}
-              className="flex-1 py-2 rounded transition-colors bg-yellow-500 text-white hover:bg-yellow-600 cursor-pointer"
-            >
-              Edit
-            </button>
-            <button
-              onClick={handleDelete}
-              className="flex-1 py-2 rounded transition-colors bg-red-600 text-white hover:bg-red-700 cursor-pointer"
-            >
-              Delete
-            </button>
-          </div>
+          isSold ? (
+            <div className="mt-4">
+              <button className="w-full py-2 rounded bg-gray-400 text-white cursor-not-allowed">
+                Sold
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-2 mt-4">
+              <button
+                onClick={handleEdit}
+                className="flex-1 py-2 rounded transition-colors bg-yellow-500 text-white hover:bg-yellow-600 cursor-pointer"
+              >
+                Edit
+              </button>
+              <button
+                onClick={handleDelete}
+                className="flex-1 py-2 rounded transition-colors bg-red-600 text-white hover:bg-red-700 cursor-pointer"
+              >
+                Delete
+              </button>
+            </div>
+          )
         ) : isAdded ? (
           <button
             onClick={handleRemoveFromCart}

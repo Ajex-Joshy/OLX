@@ -1,12 +1,31 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { use } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { marksAsSold } from "../store/productSlice";
+import { clearCart } from "../store/cartSlice";
 
 const CheckOut = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const totalPrice = cartItems.reduce((acc, item) => acc + item.price, 0);
+  const ids = cartItems.reduce((acc, curr) => {
+    acc.push(curr.id);
+    return acc;
+  }, []);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handlePlaceOrder = async () => {
+    await Swal.fire({
+      icon: "success",
+      title: "Order Placed!",
+      text: "Your order has been successfully placed.",
+      confirmButtonText: "OK",
+    });
+    dispatch(marksAsSold(ids));
+    dispatch(clearCart());
+    navigate("/");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -51,15 +70,7 @@ const CheckOut = () => {
           </div>
 
           <button
-            onClick={async () => {
-              await Swal.fire({
-                icon: "success",
-                title: "Order Placed!",
-                text: "Your order has been successfully placed.",
-                confirmButtonText: "OK",
-              });
-              navigate("/");
-            }}
+            onClick={handlePlaceOrder}
             className="mt-8 w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg shadow-md cursor-pointer"
           >
             Place Order
