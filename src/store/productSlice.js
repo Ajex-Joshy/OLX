@@ -77,5 +77,4 @@ const productSlice = createSlice({
 });
 
 export const { addProduct, deleteProduct } = productSlice.actions;
-export { markProductsAsSold };
 export default productSlice.reducer;

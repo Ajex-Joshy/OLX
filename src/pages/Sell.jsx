@@ -56,7 +56,7 @@ const Sell = () => {
           imageUrl,
         });
         toast.success("Product updated successfully!", { duration: 2000 });
-        setTimeout(() => navigate("/my-products"), 2000);
+        setTimeout(() => navigate("/"), 2000);
       } else {
         await addDoc(collection(db, "products"), {
           productName: formData.productName,
@@ -68,7 +68,7 @@ const Sell = () => {
           isSold: false,
         });
         toast.success("Product uploaded successfully!", { duration: 2000 });
-        setTimeout(() => navigate("/my-products"), 2000);
+        setTimeout(() => navigate("/"), 2000);
       }
     } catch (err) {
       console.log(err.message);

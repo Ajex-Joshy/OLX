@@ -13,8 +13,8 @@ import { auth } from "../config/firebase";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("ajex@joshy.com");
-  const [password, setPassword] = useState("Ajex@12345");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

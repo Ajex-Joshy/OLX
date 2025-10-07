@@ -2,8 +2,8 @@ import React, { use } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { marksAsSold } from "../store/productSlice";
 import { clearCart } from "../store/cartSlice";
+import { markProductsAsSold } from "../store/productSlice";
 
 const CheckOut = () => {
   const cartItems = useSelector((state) => state.cart.items);
@@ -22,7 +22,7 @@ const CheckOut = () => {
       text: "Your order has been successfully placed.",
       confirmButtonText: "OK",
     });
-    dispatch(marksAsSold(ids));
+    dispatch(markProductsAsSold(ids));
     dispatch(clearCart());
     navigate("/");
   };

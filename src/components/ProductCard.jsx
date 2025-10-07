@@ -59,7 +59,7 @@ const ProductCard = ({
   };
 
   return (
-    <div className="max-w-sm bg-white rounded-lg shadow-md overflow-hidden m-4 hover:shadow-xl transition-shadow">
+    <div className="w-70 bg-white rounded-lg shadow-md overflow-hidden m-4 hover:shadow-xl transition-shadow">
       <img
         src={imageUrl}
         alt={productName}
